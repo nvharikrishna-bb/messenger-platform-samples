@@ -1,6 +1,5 @@
-blocks : [
-  {
-    "blockId" : "1",
+{
+  "block_hi" :{
     "message":{
       "attachment":{
       "type":"template",
@@ -16,23 +15,18 @@ blocks : [
            {
           "type":"postback",
           "title":"Apply for Credit Card",
-          "payload":{
-            "nextBlockId" : "2"
-          }
-           },
-           {
+          "payload":"block_cc_list"
+          },
+          {
           "type":"postback",
           "title":"Finance Guides",
-          "payload":{
-            "nextBlockId" : "3"
-          }
-           }]
+          "payload":"block_finance_guides"
+          }]
         }
       }
     }
   },
-  {
-    "blockId" : "2",
+  "block_cc_list" :{
     "message" : {
       "attachment" : {
         "type" : "template",
@@ -50,9 +44,7 @@ blocks : [
               {
               "type":"postback",
               "title":"Apply Now",
-              "payload":{
-                "nextBlockId" : "4"
-              }
+              "payload":"block_age"
               } 
             ]
           },{
@@ -67,9 +59,7 @@ blocks : [
               {
               "type":"postback",
               "title":"Apply Now",
-              "payload":{
-                "nextBlockId" : "4"
-              }
+              "payload":"block_age"
               } 
             ]
           }
@@ -78,8 +68,7 @@ blocks : [
       }
     }
   },
-  {
-    "blockId" : "4",
+  "block_age": {
     "message" : {
       "attachment" : {
         "type" : "template",
@@ -92,4 +81,4 @@ blocks : [
       }
     }
   }
-]
+}

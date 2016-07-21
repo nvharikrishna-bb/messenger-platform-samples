@@ -17,10 +17,11 @@ const
   express = require('express'),
   https = require('https'),  
   request = require('request'),
-  userContext = require('userContext');
+  userContext = require('./userContext'),
+  blocks = require('./config/blocks');
 
 var app = express();
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 8080);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
@@ -308,12 +309,30 @@ function receivedMessage(event) {
         sendAccountLinking(senderID);
         break;
 
+      case 'hi':
+        sendBlock(senderID, "block_hi");
+        break;
+
       default:
         sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
   }
+}
+
+
+function sendBlock(senderID, blockId){
+  console.log(JSON.stringify(blocks));
+  var blockInfo = blocks[blockId];
+  
+  blockInfo.recipient = {
+    id: senderID
+  };
+
+  console.log("JSON for block id " + blockId + " = " + JSON.stringify(blockInfo));
+
+  callSendAPI(blockInfo);
 }
 
 
@@ -811,7 +830,7 @@ function callSendAPI(messageData) {
     method: 'POST',
     json: messageData
 
-  }, function (error, response, body) {
+  }, function (error, response, body) { 
     if (!error && response.statusCode == 200) {
       var recipientId = body.recipient_id;
       var messageId = body.message_id;
@@ -824,7 +843,8 @@ function callSendAPI(messageData) {
         recipientId);
       }
     } else {
-      console.error(response.error);
+      console.error("ERROR: status code = " + response.statusCode);
+      console.error( "ERROR: " + response.error);
     }
   });  
 }
