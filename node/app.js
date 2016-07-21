@@ -331,6 +331,8 @@ function sendBlock(senderID, blockId){
   };
 
   console.log("JSON for block id " + blockId + " = " + JSON.stringify(blockInfo));
+  userContext.setKey(senderID, "currentBlock", blockId);
+
 
   callSendAPI(blockInfo);
 }
@@ -542,6 +544,11 @@ function sendFileMessage(recipientId) {
  *
  */
 function sendTextMessage(recipientId, messageText) {
+  if(userContext.getKey(recipientId, "currentBlock") === "block_age"){
+    userContext.setKey(recipientId, "age", messageText);
+    sendBlock(recipientId, "block_submit_app");
+    return;
+  }
   var messageData = {
     recipient: {
       id: recipientId
