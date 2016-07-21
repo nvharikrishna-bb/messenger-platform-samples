@@ -9,7 +9,7 @@
           "buttons":[
              {
             "type":"web_url",
-            "url":"https://bankbazaar.com",
+            "url":"https://www.bankbazaar.com",
             "title":"Show Website"
              },
              {
@@ -77,7 +77,7 @@
   },
   "block_submit_app":{
     "message":{
-      "text" : "App submitted..."
+      "text" : "App submitted. Our customer relation ship manager will get in touch with you ASAP."
     }
   }
 }
