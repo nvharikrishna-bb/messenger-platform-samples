@@ -70,15 +70,13 @@
   },
   "block_age": {
     "message" : {
-      "attachment" : {
-        "type" : "template",
-        "payload" : {
-          "template_type" : "generic",
-          "elements" : {
-            "text" : "What is your age?"
-          }
-        }
-      }
+      "text" : "What is your age?",
+      "metadata": "block_submit_app"
+    }
+  },
+  "block_submit_app":{
+    "message":{
+      "text" : "App submitted..."
     }
   }
 }
