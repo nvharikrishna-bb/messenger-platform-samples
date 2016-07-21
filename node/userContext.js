@@ -12,8 +12,8 @@ setKey = function(userId , key, value) {
 
 getKey= function(userId , key) {
 		if(typeof userId == 'undefined' || typeof key == 'undefined' || typeof dict[userId] == 'undefined')
-			return {};
-  		return typeof dict[userId][key] == 'undefined' ? {} : dict[userId][key];
+			return "";
+  		return typeof dict[userId][key] == 'undefined' ? "" : dict[userId][key];
 };
 	
 module.exports.getKey = getKey;

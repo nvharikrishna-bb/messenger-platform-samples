@@ -2,26 +2,27 @@
   "block_hi" :{
     "message":{
       "attachment":{
-      "type":"template",
+        "type":"template",
         "payload":{
-        "template_type":"button",
-        "text":"HI!! Welcome to BankBazaar.. Your personal finance assistant! Do you have any questions regarding your finances? Choose one of the options",
-        "buttons":[
-           {
-          "type":"web_url",
-          "url":"https://bankbazaar.com",
-          "title":"Show Website"
-           },
-           {
-          "type":"postback",
-          "title":"Apply for Credit Card",
-          "payload":"block_cc_list"
-          },
-          {
-          "type":"postback",
-          "title":"Finance Guides",
-          "payload":"block_finance_guides"
-          }]
+          "template_type":"button",
+          "text":"HI {first_name}!! Welcome to BankBazaar.. Your personal finance assistant! Do you have any questions regarding your finances? Choose one of the options",
+          "buttons":[
+             {
+            "type":"web_url",
+            "url":"https://bankbazaar.com",
+            "title":"Show Website"
+             },
+             {
+            "type":"postback",
+            "title":"Apply for Credit Card",
+            "payload":"block_cc_list"
+            },
+            {
+            "type":"postback",
+            "title":"Finance Guides",
+            "payload":"block_finance_guides"
+            }
+          ]
         }
       }
     }

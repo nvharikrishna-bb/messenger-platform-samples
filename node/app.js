@@ -310,7 +310,7 @@ function receivedMessage(event) {
         break;
 
       case 'hi':
-        sendBlock(senderID, "block_hi");
+        sendHi(senderID, "block_hi");
         break;
 
       default:
@@ -321,6 +321,24 @@ function receivedMessage(event) {
   }
 }
 
+function sendHi(senderID, blockId){
+  userProfile(senderID, function(data){
+    var blockInfo = blocks[blockId];
+  
+    blockInfo.recipient = {
+      id: senderID
+    };
+
+    var first_name = userContext.getKey(senderID, "first_name");
+    blockInfo.message.attachment.payload.text = blockInfo.message.attachment.payload.text.replace("{first_name}", first_name);
+
+    console.log("JSON for block id " + blockId + " = " + JSON.stringify(blockInfo));
+    userContext.setKey(senderID, "currentBlock", blockId);
+
+
+    callSendAPI(blockInfo);
+  });
+}
 
 function sendBlock(senderID, blockId){
   console.log(JSON.stringify(blocks));
@@ -857,6 +875,41 @@ function callSendAPI(messageData) {
       console.error( "ERROR: " + response.error);
     }
   });  
+}
+
+
+function userProfile(recipientId, cb){
+
+  var url = "https://graph.facebook.com/v2.6/" + recipientId ;
+
+  request({
+    uri: url,
+    qs: { access_token: PAGE_ACCESS_TOKEN,
+          fields:"first_name,last_name,profile_pic,locale,timezone,gender" //phone_number
+    },
+    method: 'GET'
+
+  }, function (error, response, body) { 
+    if (!error && response.statusCode == 200) {
+      // var recipientId = body.recipient_id;
+      // var messageId = body.message_id;
+      body = JSON.parse(body);
+      console.log("Received Body: " + JSON.stringify(body)); //TODO: delete
+
+      userContext.setKey(recipientId, "first_name", body.first_name);
+      userContext.setKey(recipientId, "last_name", body.last_name);
+      userContext.setKey(recipientId, "gender", body.gender);
+      userContext.setKey(recipientId, "profile_pic", body.profile_pic);
+
+      console.log("Successfully fetched user profile information.");
+      console.log("first_name = " + body.first_name);
+      cb(body);
+    } else {
+      console.error("ERROR: status code = " + response.statusCode);
+      console.error( "ERROR: " + response.error);
+    }
+  }); 
+
 }
 
 // Start server
